@@ -1,0 +1,105 @@
+# Composer
+/vendor/
+/composer.lock
+
+# PHPUnit
+/phpunit.xml
+/phpunit.xml.dist
+
+# Laravel
+/.env
+/.env.*.php
+/.env.php
+/storage/*.key
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/*
+/storage/logs/*
+/bootstrap/cache/*
+
+# Symfony
+/app/config/parameters.yml
+/app/config/parameters.ini
+/var/logs/*
+/var/cache/*
+/var/sessions/*
+/vendor/
+/bin/
+/var/bootstrap.php.cache
+/app/phpunit.xml
+/app/phpunit.xml.dist
+
+# Zend Framework
+/configs/application.ini
+/configs/application.ini.dist
+/data/cache/*
+/data/logs/*
+/data/session/*
+/vendor/
+
+# CakePHP
+/tmp/*
+/logs/*
+/vendors/*
+/plugins/*
+/config/database.php
+
+# Yii
+/protected/runtime/*
+/assets/*
+/protected/extensions/*
+/protected/config/main-local.php
+/protected/config/console-local.php
+
+# FuelPHP
+/fuel/app/cache/*
+/fuel/app/logs/*
+/fuel/app/tmp/*
+/fuel/vendor/*
+/fuel/core/vendor/*
+/fuel/packages/*/vendor/*
+
+# Slim Framework
+/logs/*
+/cache/*
+/vendor/
+
+# CodeIgniter
+/application/cache/*
+/application/logs/*
+/vendor/
+
+# Phalcon
+/cache/*
+/logs/*
+/vendor/
+
+# Other
+*.log
+*.cache
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig
+*.save
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+*.sql.gz
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.bak
+*.backup
+*.old
+*.tmp
+*.temp
+*.log
+*.log.*
