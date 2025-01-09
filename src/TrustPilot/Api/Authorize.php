@@ -92,7 +92,7 @@ class Authorize extends AbstractApi
         );
         $fullBody = array_merge($body, $data);
 
-        return $response = json_decode($this->api->post(
+        return json_decode($this->api->post(
             'oauth/oauth-business-users-for-applications/accesstoken',
             array(
                 'form_params' => $fullBody
@@ -130,11 +130,11 @@ class Authorize extends AbstractApi
      */
     public function isRefreshedToken()
     {
-
         if (!$this->isValidToken()) {
             $this->refreshToken();
             return true;
         }
+
         return false;
     }
 
@@ -149,6 +149,7 @@ class Authorize extends AbstractApi
         if (!isset($this->token)) {
             return false;
         }
+        
         $issued_at = intval(substr($this->token->issued_at, 0, -3));
         $expires_in = intval($this->token->expires_in);
         $expiry = $issued_at + $expires_in;

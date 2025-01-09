@@ -22,7 +22,7 @@ class Invitation extends AbstractApi
         $data['preferredSendTime'] = isset($data['preferredSendTime']) ? Carbon::parse($data['preferredSendTime'])->toAtomString() : '';
 
         return json_decode(
-            $this->api->post('private/business-units/' . $businessUnitId . '/email-invitations', array('json' => $data))
+            $this->api->post('private/business-units/' . $businessUnitId . '/invitations', array('json' => $data))
         );
     }
 
@@ -76,7 +76,7 @@ class Invitation extends AbstractApi
      * @param
      * @return string
      */
-    public function generateInvitationLink($businessUnitId, $data)
+    public function generateInvitationLink($businessUnitId, $data = [])
     {
         $data['locale'] = isset($data['locale']) ? $data['locale'] : 'en-US';
         $response = json_decode(
