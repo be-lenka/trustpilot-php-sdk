@@ -9,6 +9,8 @@ composer require be-lenka/trustpilot-php-sdk
 ### Initialize
 
 ```php
+use TrustPilot\TrustPilot;
+
 $username = '<login_email>';
 $password = '<login_password>';
 
