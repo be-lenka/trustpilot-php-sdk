@@ -1,20 +1,12 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace TrustPilot\Api;
 
-
-
 use TrustPilot\TrustPilot;
 
-class Consumer extends AbstractApi{
-  
+class Consumer extends AbstractApi
+{
+
     /**
      * Get the web links of the consumer
      * https://developers.trustpilot.com/consumer-api#get-the-web-links-of-the-consumer
@@ -24,13 +16,16 @@ class Consumer extends AbstractApi{
     public function getWebLinks($consumerId, $locale = 'en-US')
     {
         return json_decode(
-            $this->api->get('consumers/' . $consumerId . '/web-links',
-                ['query' => 
+            $this->api->get(
+                'consumers/' . $consumerId . '/web-links',
+                [
+                    'query' =>
                     [
-                       'locale' => $locale, 
+                        'locale' => $locale,
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -42,9 +37,11 @@ class Consumer extends AbstractApi{
     public function fetchProfiles($data)
     {
         return json_decode(
-            $this->api->post('consumers/profile/bulk',
+            $this->api->post(
+                'consumers/profile/bulk',
                 array('json' => $data)
-            ));
+            )
+        );
     }
 
     /**
@@ -56,7 +53,8 @@ class Consumer extends AbstractApi{
     public function getProfileWithReviewsAndLinks($consumerId)
     {
         return json_decode(
-            $this->api->get('consumers/' . $consumerId));
+            $this->api->get('consumers/' . $consumerId)
+        );
     }
 
     /**
@@ -68,7 +66,8 @@ class Consumer extends AbstractApi{
     public function getProfile($consumerId)
     {
         return json_decode(
-            $this->api->get('consumers/' . $consumerId . '/profile'));
+            $this->api->get('consumers/' . $consumerId . '/profile')
+        );
     }
 
     /**
@@ -80,18 +79,20 @@ class Consumer extends AbstractApi{
     public function getReviews($consumerId, $data = array())
     {
         return json_decode(
-            $this->api->get('consumers/' . $consumerId . '/reviews',
-                ['query' => 
+            $this->api->get(
+                'consumers/' . $consumerId . '/reviews',
+                [
+                    'query' =>
                     [
-                       'stars' => $data['stars'],
-                       'language' => $data['language'], 
-                       'page' => $data['page'], 
-                       'perPage' => $data['perPage'], 
-                       'orderBy' => $data['orderBy'], 
-                       'includeReportedReviews' => $data['includeReportedReviews']
+                        'stars' => $data['stars'] ?? '',
+                        'language' => $data['language'] ?? '',
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
+                        'orderBy' => $data['orderBy'] ?? '',
+                        'includeReportedReviews' => $data['includeReportedReviews'] ?? ''
                     ]
                 ]
-            ));
+            )
+        );
     }
-
 }

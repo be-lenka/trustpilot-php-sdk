@@ -1,16 +1,6 @@
 <?php
 
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace TrustPilot;
-
-
 
 use TrustPilot\Adapter\GuzzleHttpAdapter;
 use TrustPilot\Api\Authorize;
@@ -96,11 +86,11 @@ class TrustPilot
      */
     protected function setAdapter(AdapterInterface $adapter = null, $headers = [])
     {
-        if(is_null($adapter)){
-            $this->client = new GuzzleHttpAdapter($headers,$this->endpoint);
+        if (is_null($adapter)) {
+            $this->client = new GuzzleHttpAdapter($headers, $this->endpoint);
             return $this;
         }
-        $this->client = new $adapter($headers,$this->endpoint);
+        $this->client = new $adapter($headers, $this->endpoint);
         return $this;
     }
 
@@ -110,10 +100,11 @@ class TrustPilot
      */
     protected function setAdapterWithToken()
     {
-        $headers = ['headers' =>
-                        ['Authorization' => 'Bearer '. $this->token->access_token]
-                   ];
-        $this->setAdapter($this->adapter,$headers);
+        $headers = [
+            'headers' =>
+            ['Authorization' => 'Bearer ' . $this->token->access_token]
+        ];
+        $this->setAdapter($this->adapter, $headers);
     }
 
     /**
@@ -122,10 +113,11 @@ class TrustPilot
      */
     protected function setAdapterWithApikey()
     {
-        $headers = ['headers' =>
-                        ['apikey' => $this->apiKey]
-                   ];
-        $this->setAdapter($this->adapter,$headers);
+        $headers = [
+            'headers' =>
+            ['apikey' => $this->apiKey]
+        ];
+        $this->setAdapter($this->adapter, $headers);
     }
 
     /**
@@ -143,10 +135,11 @@ class TrustPilot
      */
     public function authorize()
     {
-        $headers = ['headers' =>
-                        ['Authorization' => base64_encode($this->apiKey . ':' . $this->secret) ]
-                   ];
-        $this->setAdapter($this->adapter,$headers);
+        $headers = [
+            'headers' =>
+            ['Authorization' => base64_encode($this->apiKey . ':' . $this->secret)]
+        ];
+        $this->setAdapter($this->adapter, $headers);
         return new Authorize($this);
     }
 
@@ -213,5 +206,4 @@ class TrustPilot
         $this->setAdapterWithToken();
         return new ServiceReviews($this);
     }
-
 }

@@ -1,20 +1,9 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace TrustPilot\Api;
 
+class BusinessUnit extends AbstractApi
+{
 
-
-use TrustPilot\TrustPilot;
-
-class BusinessUnit extends AbstractApi{
-  
     /**
      * Get a list of business units
      *
@@ -24,15 +13,18 @@ class BusinessUnit extends AbstractApi{
     public function fetchAll($country = '', $page = 1, $perPage = 1000)
     {
         return json_decode(
-            $this->api->get('business-units',
-                ['query' => 
+            $this->api->get(
+                'business-units',
+                [
+                    'query' =>
                     [
-                       'country' => $country, 
-                       'page' => $page, 
-                       'perPage' => $perPage
+                        'country' => $country,
+                        'page' => $page,
+                        'perPage' => $perPage
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -44,13 +36,16 @@ class BusinessUnit extends AbstractApi{
     public function find($name)
     {
         return json_decode(
-            $this->api->get('business-units/find',
-                ['query' => 
+            $this->api->get(
+                'business-units/find',
+                [
+                    'query' =>
                     [
-                       'name' => $name
+                        'name' => $name
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -62,7 +57,8 @@ class BusinessUnit extends AbstractApi{
     public function get($businessUnitId)
     {
         return json_decode(
-            $this->api->get('business-units/'.$businessUnitId));
+            $this->api->get('business-units/' . $businessUnitId)
+        );
     }
 
     /**
@@ -74,13 +70,16 @@ class BusinessUnit extends AbstractApi{
     public function getWebLink($businessUnitId, $locale = 'en-US')
     {
         return json_decode(
-            $this->api->get('business-units/' . $businessUnitId . '/web-links',
-                ['query' => 
+            $this->api->get(
+                'business-units/' . $businessUnitId . '/web-links',
+                [
+                    'query' =>
                     [
-                       'locale' => $locale
+                        'locale' => $locale
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -92,13 +91,16 @@ class BusinessUnit extends AbstractApi{
     public function listCategories($businessUnitId, $locale = '')
     {
         return json_decode(
-            $this->api->get('business-units/' . $businessUnitId . '/categories',
-                ['query' => 
+            $this->api->get(
+                'business-units/' . $businessUnitId . '/categories',
+                [
+                    'query' =>
                     [
-                       'locale' => $locale
+                        'locale' => $locale
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -110,15 +112,18 @@ class BusinessUnit extends AbstractApi{
     public function search($query, $page = 1, $perPage = 20)
     {
         return json_decode(
-            $this->api->get('business-units/search',
-                ['query' => 
+            $this->api->get(
+                'business-units/search',
+                [
+                    'query' =>
                     [
-                       'query' => $query,
-                       'page' => $page,
-                       'perPage' => $perPage
+                        'query' => $query,
+                        'page' => $page,
+                        'perPage' => $perPage
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -130,21 +135,24 @@ class BusinessUnit extends AbstractApi{
     public function getReviews($businessUnitId, $data)
     {
         return json_decode(
-            $this->api->get('business-units/' . $businessUnitId . '/reviews',
-                ['query' => 
+            $this->api->get(
+                'business-units/' . $businessUnitId . '/reviews',
+                [
+                    'query' =>
                     [
-                       'stars' => $data['stars'],
-                       'language' => $data['language'],
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage'],
-                       'orderBy' => $data['orderBy'],
-                       'tagGroup' => $data['tagGroup'],
-                       'tagValue' => $data['tagValue'],
-                       'responded' => $data['responded'],
-                       'includeReportedReviews' => $data['includeReportedReviews']
+                        'stars' => $data['stars'] ?? '',
+                        'language' => $data['language'] ?? '',
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
+                        'orderBy' => $data['orderBy'] ?? '',
+                        'tagGroup' => $data['tagGroup'] ?? '',
+                        'tagValue' => $data['tagValue'] ?? '',
+                        'responded' => $data['responded'] ?? '',
+                        'includeReportedReviews' => $data['includeReportedReviews'] ?? '',
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -156,27 +164,30 @@ class BusinessUnit extends AbstractApi{
     public function getPrivateReviews($businessUnitId, $data)
     {
         return json_decode(
-            $this->api->get('private/business-units/' . $businessUnitId . '/reviews',
-                ['query' => 
+            $this->api->get(
+                'private/business-units/' . $businessUnitId . '/reviews',
+                [
+                    'query' =>
                     [
-                       'stars' => $data['stars'],
-                       'language' => $data['language'],
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage'],
-                       'orderBy' => $data['orderBy'],
-                       'tagGroup' => $data['tagGroup'],
-                       'tagValue' => $data['tagValue'],
-                       'responded' => $data['responded'],
-                       'referenceId' => $data['referenceId'],
-                       'referralEmail' => $data['referralEmail'],
-                       'reported' => $data['responded'],
-                       'startDateTime' => $data['startDateTime'],
-                       'endDateTime' => $data['endDateTime'],
-                       'source' => $data['source'],
-                       'username' => $data['username']
+                        'stars' => $data['stars'] ?? '',
+                        'language' => $data['language'] ?? '',
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
+                        'orderBy' => $data['orderBy'] ?? '',
+                        'tagGroup' => $data['tagGroup'] ?? '',
+                        'tagValue' => $data['tagValue'] ?? '',
+                        'responded' => $data['responded'] ?? '',
+                        'referenceId' => $data['referenceId'] ?? '',
+                        'referralEmail' => $data['referralEmail'] ?? '',
+                        'reported' => $data['responded'] ?? '',
+                        'startDateTime' => $data['startDateTime'] ?? '',
+                        'endDateTime' => $data['endDateTime'] ?? '',
+                        'source' => $data['source'] ?? '',
+                        'username' => $data['username'] ?? ''
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -188,7 +199,8 @@ class BusinessUnit extends AbstractApi{
     public function getTags($businessUnitId, $locale = '')
     {
         return json_decode(
-            $this->api->get('business-units/' . $businessUnitId . '/tags'));
+            $this->api->get('business-units/' . $businessUnitId . '/tags')
+        );
     }
 
     /**
@@ -201,5 +213,4 @@ class BusinessUnit extends AbstractApi{
     {
         return json_decode($this->api->get('business-units/' . $businessUnitId . '/images'));
     }
-
 }

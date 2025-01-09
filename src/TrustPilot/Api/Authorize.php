@@ -1,22 +1,13 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace TrustPilot\Api;
-
-
 
 use TrustPilot\TrustPilot;
 use Carbon\Carbon;
 
-class Authorize extends AbstractApi{
+class Authorize extends AbstractApi
+{
 
-    
     /**
      * @var String
      */
@@ -56,10 +47,10 @@ class Authorize extends AbstractApi{
      * @return 
      */
     public function createPasswordToken($username = '', $password = '')
-    {        
-       $data = array('username' => $username, 'password' => $password);
-       $this->token = $this->createToken('password', $data);
-       return $this->token;
+    {
+        $data = array('username' => $username, 'password' => $password);
+        $this->token = $this->createToken('password', $data);
+        return $this->token;
     }
 
     /**
@@ -69,10 +60,10 @@ class Authorize extends AbstractApi{
      * @return 
      */
     public function redirectToAuth($apiKey, $redirect_uri = '')
-    {        
-       $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
-       header('Location: https://authenticate.trustpilot.com?client_id='.$apiKey.'&redirect_uri='.urlencode($redirect_uri).'&response_type=code');
-       exit;
+    {
+        $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
+        header('Location: https://authenticate.trustpilot.com?client_id=' . $apiKey . '&redirect_uri=' . urlencode($redirect_uri) . '&response_type=code');
+        exit;
     }
 
     /**
@@ -82,10 +73,10 @@ class Authorize extends AbstractApi{
      * @return 
      */
     public function createAuthToken($code = '', $redirect_uri = '')
-    {        
-       $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
-       $this->token = $this->createToken('authorization_code', $data);
-       return $this->token;
+    {
+        $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
+        $this->token = $this->createToken('authorization_code', $data);
+        return $this->token;
     }
 
     /**
@@ -94,11 +85,11 @@ class Authorize extends AbstractApi{
      * @param  
      * @return 
      */
-    protected function createToken($type,$data)
+    protected function createToken($type, $data)
     {
         $body = array(
-                    'grant_type' => $type
-                );
+            'grant_type' => $type
+        );
         $fullBody = array_merge($body, $data);
 
         return $response = json_decode($this->api->post(
@@ -127,9 +118,8 @@ class Authorize extends AbstractApi{
             )
         ));
 
-       $this->token = $response;
-       return $response;
-
+        $this->token = $response;
+        return $response;
     }
 
     /**
@@ -140,8 +130,8 @@ class Authorize extends AbstractApi{
      */
     public function isRefreshedToken()
     {
-        
-        if(!$this->isValidToken()){
+
+        if (!$this->isValidToken()) {
             $this->refreshToken();
             return true;
         }
@@ -156,7 +146,7 @@ class Authorize extends AbstractApi{
      */
     public function isValidToken()
     {
-        if(!isset($this->token)){
+        if (!isset($this->token)) {
             return false;
         }
         $issued_at = intval(substr($this->token->issued_at, 0, -3));
@@ -164,13 +154,11 @@ class Authorize extends AbstractApi{
         $expiry = $issued_at + $expires_in;
 
         $now = Carbon::now()->timestamp;
-        
-        if($now > ($expiry - 7200)){
+
+        if ($now > ($expiry - 7200)) {
             return false;
         }
 
         return true;
-
     }
-
 }

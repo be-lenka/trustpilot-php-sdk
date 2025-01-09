@@ -1,21 +1,12 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace TrustPilot\Api;
 
 use Carbon\Carbon;
-
-
-
 use TrustPilot\TrustPilot;
 
-class ProductReviews extends AbstractApi{
+class ProductReviews extends AbstractApi
+{
 
     /**
      * Create product review invitation link
@@ -27,10 +18,11 @@ class ProductReviews extends AbstractApi{
      */
     public function createInvitationLink($businessUnitId, $data)
     {
-	$data['locale'] = isset($data['locale']) ? $data['locale'] : 'en-US' ;
+        $data['locale'] = isset($data['locale']) ? $data['locale'] : 'en-US';
 
         return json_decode(
-            $this->api->post('private/product-reviews/business-units/'. $businessUnitId .'/invitation-links',array('json' => $data)));
+            $this->api->post('private/product-reviews/business-units/' . $businessUnitId . '/invitation-links', array('json' => $data))
+        );
     }
 
     /**
@@ -44,17 +36,20 @@ class ProductReviews extends AbstractApi{
     public function getPrivateReviews($businessUnitId, $data)
     {
         return json_decode(
-            $this->api->get('private/product-reviews/business-units/'. $businessUnitId .'/reviews',
-                ['query' =>
+            $this->api->get(
+                'private/product-reviews/business-units/' . $businessUnitId . '/reviews',
+                [
+                    'query' =>
                     [
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage'],
-                       'sku' => $data['sku'],
-                       'language' => $data['language'],
-                       'state' => $data['state'],
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
+                        'sku' => $data['sku'] ?? '',
+                        'language' => $data['language'] ?? '',
+                        'state' => $data['state'] ?? ''
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -68,17 +63,20 @@ class ProductReviews extends AbstractApi{
     public function getImportedReviews($businessUnitId, $apiKey, $data)
     {
         return json_decode(
-            $this->api->get('product-reviews/business-units/'. $businessUnitId .'/imported-reviews',
-                ['query' =>
+            $this->api->get(
+                'product-reviews/business-units/' . $businessUnitId . '/imported-reviews',
+                [
+                    'query' =>
                     [
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage'],
-                       'sku' => $data['sku'],
-                       'language' => $data['language'],
-                       'apikey' => $apiKey
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
+                        'sku' => $data['sku'] ?? '',
+                        'language' => $data['language'] ?? '',
+                        'apikey' => $apiKey
                     ],
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -89,17 +87,20 @@ class ProductReviews extends AbstractApi{
      * @param  string, array
      * @return \stdClass
      */
-    public function getReviewsSummaries($businessUnitId , $data)
+    public function getReviewsSummaries($businessUnitId, $data)
     {
         return json_decode(
-            $this->api->get('private/product-reviews/business-units/'. $businessUnitId .'/summaries',
-                ['query' =>
+            $this->api->get(
+                'private/product-reviews/business-units/' . $businessUnitId . '/summaries',
+                [
+                    'query' =>
                     [
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage']
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -113,7 +114,8 @@ class ProductReviews extends AbstractApi{
     public function getPrivateReview($reviewId)
     {
         return json_decode(
-            $this->api->get('private/product-reviews/'. $reviewId));
+            $this->api->get('private/product-reviews/' . $reviewId)
+        );
     }
 
     /**
@@ -126,10 +128,11 @@ class ProductReviews extends AbstractApi{
      */
     public function createReviewConversation($reviewId)
     {
-       $response = json_decode(
-            $this->api->post('private/product-reviews/'. $reviewId .'/create-conversation'));
+        $response = json_decode(
+            $this->api->post('private/product-reviews/' . $reviewId . '/create-conversation')
+        );
 
-       return $response['conversationId'];
+        return $response['conversationId'];
     }
 
     /**
@@ -143,18 +146,17 @@ class ProductReviews extends AbstractApi{
     public function getReviewsSummary($businessUnitId, $data)
     {
         return json_decode(
-            $this->api->get('private/product-reviews/business-units/'. $businessUnitId,
-                ['query' =>
+            $this->api->get(
+                'private/product-reviews/business-units/' . $businessUnitId,
+                [
+                    'query' =>
                     [
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage']
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
                     ]
                 ]
-            ));
+            )
+        );
     }
-
-    // Incomplete Issue right now is they are mixing some call in the same area
-    // With oauth token and api key, so need to divide this class in 2 to
-    // Support the api keys call as well
 
 }

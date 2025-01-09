@@ -1,20 +1,12 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace TrustPilot\Api;
 
-
-
 use TrustPilot\TrustPilot;
 
-class Categories extends AbstractApi{
-  
+class Categories extends AbstractApi
+{
+
     /**
      * Get a list of categories under a specific parent category.
      *
@@ -24,15 +16,18 @@ class Categories extends AbstractApi{
     public function listCategories($country, $parentId = '', $local = 'en-US')
     {
         return json_decode(
-            $this->api->get('categories',
-                ['query' => 
+            $this->api->get(
+                'categories',
+                [
+                    'query' =>
                     [
-                       'country' => $country, 
-                       'parentId' => $parentId, 
-                       'local' => $local
+                        'country' => $country,
+                        'parentId' => $parentId,
+                        'local' => $local
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -44,14 +39,17 @@ class Categories extends AbstractApi{
     public function getCategory($categoryId, $country, $local = 'en-US')
     {
         return json_decode(
-            $this->api->get('categories/'.$categoryId,
-                ['query' => 
+            $this->api->get(
+                'categories/' . $categoryId,
+                [
+                    'query' =>
                     [
-                       'country' => $country, 
-                       'local' => $local
+                        'country' => $country,
+                        'local' => $local
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -63,15 +61,18 @@ class Categories extends AbstractApi{
     public function findCategory($name, $country, $local = 'en-US')
     {
         return json_decode(
-            $this->api->get('categories/find',
-                ['query' => 
+            $this->api->get(
+                'categories/find',
+                [
+                    'query' =>
                     [
-                       'name' => $name, 
-                       'country' => $country, 
-                       'local' => $local
+                        'name' => $name,
+                        'country' => $country,
+                        'local' => $local
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -83,16 +84,19 @@ class Categories extends AbstractApi{
     public function listBusinessUnitsInCategory($categoryId, $country, $page = 1, $perPage = 20)
     {
         return json_decode(
-            $this->api->get('categories/'.$categoryId.'/business-units',
-                ['query' => 
+            $this->api->get(
+                'categories/' . $categoryId . '/business-units',
+                [
+                    'query' =>
                     [
-                       'categoryId' => $categoryId, 
-                       'country' => $country,
-                       'page' => $page, 
-                       'perPage' => $perPage, 
+                        'categoryId' => $categoryId,
+                        'country' => $country,
+                        'page' => $page,
+                        'perPage' => $perPage,
                     ]
                 ]
-            ));
+            )
+        );
     }
 
     /**
@@ -104,15 +108,18 @@ class Categories extends AbstractApi{
     public function searchCategory($query, $country, $local = 'en-US')
     {
         return json_decode(
-            $this->api->get('categories/search',
-                ['query' => 
+            $this->api->get(
+                'categories/search',
+                [
+                    'query' =>
                     [
-                       'categoryId' => $categoryId, 
-                       'country' => $country,
-                       'page' => $page, 
-                       'perPage' => $perPage, 
+                        'categoryId' => $categoryId,
+                        'country' => $country,
+                        'page' => $page,
+                        'perPage' => $perPage,
                     ]
                 ]
-            ));
+            )
+        );
     }
 }

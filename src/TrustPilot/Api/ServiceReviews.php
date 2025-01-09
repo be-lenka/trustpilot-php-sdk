@@ -1,20 +1,12 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
-
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace TrustPilot\Api;
 
-
-
 use TrustPilot\TrustPilot;
 
-class ServiceReviews extends AbstractApi{
-    
+class ServiceReviews extends AbstractApi
+{
+
     // Incomplete
     /**
      * Get private service reviews
@@ -27,14 +19,17 @@ class ServiceReviews extends AbstractApi{
     public function getPrivateReviews($businessUnitId, $data)
     {
         return json_decode(
-            $this->api->get('private/business-units/'. $businessUnitId .'/reviews',
-                ['query' =>
+            $this->api->get(
+                'private/business-units/' . $businessUnitId . '/reviews',
+                [
+                    'query' =>
                     [
-                       'page' => $data['page'],
-                       'perPage' => $data['perPage'],
-                       'language' => $data['language'],
+                        'page' => $data['page'] ?? '',
+                        'perPage' => $data['perPage'] ?? '',
+                        'language' => $data['language'] ?? '',
                     ]
                 ]
-            ));
+            )
+        );
     }
 }

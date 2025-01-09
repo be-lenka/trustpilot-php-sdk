@@ -1,14 +1,6 @@
 <?php
-/*
- * This file is part of the TrustPilot library.
- *
 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 namespace TrustPilot\Adapter;
-
-
 
 use TrustPilot\Exception\HttpException;
 use GuzzleHttp\Client;
@@ -16,8 +8,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Response;
-
-
 
 class GuzzleHttpAdapter implements AdapterInterface
 {
@@ -43,7 +33,7 @@ class GuzzleHttpAdapter implements AdapterInterface
     public function __construct($headers, $endpoint = '', ClientInterface $client = null)
     {
         $this->endpoint = $endpoint;
-        $this->client = $client ?: new Client($headers);       
+        $this->client = $client ?: new Client($headers);
     }
 
     /**
@@ -52,8 +42,7 @@ class GuzzleHttpAdapter implements AdapterInterface
     public function get($url, $options = array())
     {
         try {
-            $this->response = $this->client->get($this->endpoint.$url,$options);
-
+            $this->response = $this->client->get($this->endpoint . $url, $options);
         } catch (RequestException $e) {
             $this->response = $e->getResponse();
             $this->handleError();
@@ -68,7 +57,7 @@ class GuzzleHttpAdapter implements AdapterInterface
     public function delete($url)
     {
         try {
-            $this->response = $this->client->delete($this->endpoint.$url);
+            $this->response = $this->client->delete($this->endpoint . $url);
         } catch (RequestException $e) {
             $this->response = $e->getResponse();
             $this->handleError();
@@ -83,7 +72,7 @@ class GuzzleHttpAdapter implements AdapterInterface
     public function put($url, $content = '')
     {
         try {
-            $this->response = $this->client->put($this->endpoint.$url, $content);
+            $this->response = $this->client->put($this->endpoint . $url, $content);
         } catch (RequestException $e) {
             $this->response = $e->getResponse();
             $this->handleError();
@@ -98,7 +87,7 @@ class GuzzleHttpAdapter implements AdapterInterface
     public function post($url, $content = '')
     {
         try {
-            $this->response = $this->client->post($this->endpoint.$url, $content);
+            $this->response = $this->client->post($this->endpoint . $url, $content);
         } catch (RequestException $e) {
             $this->response = $e->getResponse();
             $this->handleError();
@@ -135,6 +124,6 @@ class GuzzleHttpAdapter implements AdapterInterface
 
         $content = json_decode($body);
 
-        throw new HttpException(isset($content) ? print_r($content,true) : 'Request not processed.', $code);
+        throw new HttpException(isset($content) ? print_r($content, true) : 'Request not processed.', $code);
     }
 }
