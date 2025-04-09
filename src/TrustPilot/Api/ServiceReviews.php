@@ -2,8 +2,6 @@
 
 namespace TrustPilot\Api;
 
-use TrustPilot\TrustPilot;
-
 class ServiceReviews extends AbstractApi
 {
 

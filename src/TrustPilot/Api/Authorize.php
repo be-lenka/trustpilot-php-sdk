@@ -2,7 +2,6 @@
 
 namespace TrustPilot\Api;
 
-use TrustPilot\TrustPilot;
 use Carbon\Carbon;
 
 class Authorize extends AbstractApi
@@ -48,7 +47,7 @@ class Authorize extends AbstractApi
      */
     public function createPasswordToken($username = '', $password = '')
     {
-        $data = array('username' => $username, 'password' => $password);
+        $data = ['username' => $username, 'password' => $password];
         $this->token = $this->createToken('password', $data);
         return $this->token;
     }
@@ -61,7 +60,6 @@ class Authorize extends AbstractApi
      */
     public function redirectToAuth($apiKey, $redirect_uri = '')
     {
-        $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
         header('Location: https://authenticate.trustpilot.com?client_id=' . $apiKey . '&redirect_uri=' . urlencode($redirect_uri) . '&response_type=code');
         exit;
     }
@@ -74,7 +72,7 @@ class Authorize extends AbstractApi
      */
     public function createAuthToken($code = '', $redirect_uri = '')
     {
-        $data = array('code' => $code, 'redirect_uri' => $redirect_uri);
+        $data = ['code' => $code, 'redirect_uri' => $redirect_uri];
         $this->token = $this->createToken('authorization_code', $data);
         return $this->token;
     }
@@ -87,16 +85,16 @@ class Authorize extends AbstractApi
      */
     protected function createToken($type, $data)
     {
-        $body = array(
+        $body = [
             'grant_type' => $type
-        );
+        ];
         $fullBody = array_merge($body, $data);
 
         return json_decode($this->api->post(
             'oauth/oauth-business-users-for-applications/accesstoken',
-            array(
+            [
                 'form_params' => $fullBody
-            )
+            ]
         ));
     }
 
@@ -110,12 +108,12 @@ class Authorize extends AbstractApi
     {
         $response = json_decode($this->api->post(
             'oauth/oauth-business-users-for-applications/refresh',
-            array(
-                'form_params' => array(
+            [
+                'form_params' => [
                     'grant_type' => 'refresh_token',
                     'refresh_token' => $this->token->refresh_token
-                )
-            )
+                ]
+            ]
         ));
 
         $this->token = $response;

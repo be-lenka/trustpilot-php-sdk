@@ -2,6 +2,8 @@
 
 namespace TrustPilot;
 
+use stdClass;
+use TrustPilot\Adapter\AdapterInterface;
 use TrustPilot\Adapter\GuzzleHttpAdapter;
 use TrustPilot\Api\Authorize;
 use TrustPilot\Api\Categories;
@@ -17,39 +19,24 @@ class TrustPilot
     /**
      * @var string
      */
-    const ENDPOINT = 'https://api.trustpilot.com/v1/';
+    private const ENDPOINT = 'https://api.trustpilot.com/v1/';
+
+    protected string $endpoint;
+
+    protected string $secret;
+
+    protected string $apiKey;
+
+    protected ?AdapterInterface $adapter = null;
+
+    protected stdClass $token;
 
     /**
-     * @var string
+     * @param string $apiKey
+     * @param string $secret
+     * @param string|null $endpoint
      */
-    protected $endpoint;
-    /**
-     * @var String
-     */
-    protected $secret;
-
-    /**
-     * @var String
-     */
-    protected $apiKey;
-
-    /**
-     * @var String
-     */
-    protected $adapter;
-
-    /**
-     * @var String
-     */
-    protected $token;
-
-
-    /**
-     * @param $apiKey
-     * @param $secret
-     * @param string $endpoint
-     */
-    public function __construct($apiKey, $secret, $endpoint = null)
+    public function __construct(string $apiKey, string $secret, string $endpoint = null)
     {
         $this->apiKey = $apiKey;
         $this->secret = $secret;
@@ -59,9 +46,10 @@ class TrustPilot
     /**
      * Set the access token
      *
-     * @param string
+     * @param stdClass $token
+     * @return void
      */
-    public function setToken($token)
+    public function setToken(stdClass $token): void
     {
         $this->token = $token;
         $auth = $this->authorize();
@@ -70,21 +58,14 @@ class TrustPilot
 
     /**
      * get the access token
-     * @return String
+     * @return stdClass
      */
-    public function getToken()
+    public function getToken(): stdClass
     {
         return $this->token;
     }
 
-    /**
-     * Initiate the client for API transation
-     *
-     * @param AdapterInterface $adapter
-     * @param array $headers
-     * @return $this
-     */
-    protected function setAdapter(AdapterInterface $adapter = null, $headers = [])
+    protected function setAdapter(AdapterInterface $adapter = null, array $headers = []): TrustPilot
     {
         if (is_null($adapter)) {
             $this->client = new GuzzleHttpAdapter($headers, $this->endpoint);
@@ -98,11 +79,14 @@ class TrustPilot
      * Set adapter to use token from Oauth
      * @return void
      */
-    protected function setAdapterWithToken()
+    protected function setAdapterWithToken(): void
     {
         $headers = [
             'headers' =>
-            ['Authorization' => 'Bearer ' . $this->token->access_token]
+                [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Authorization' => 'Bearer ' . $this->token->access_token,
+                ]
         ];
         $this->setAdapter($this->adapter, $headers);
     }
@@ -111,7 +95,7 @@ class TrustPilot
      * Set adapter to use API key
      * @return void
      */
-    protected function setAdapterWithApikey()
+    protected function setAdapterWithApikey(): void
     {
         $headers = [
             'headers' =>
@@ -120,88 +104,62 @@ class TrustPilot
         $this->setAdapter($this->adapter, $headers);
     }
 
-    /**
-     * Get the client
-     *
-     * @return AdapterInterface
-     */
-    public function getClient()
+    public function getClient(): AdapterInterface
     {
         return $this->client;
     }
 
-    /**
-     * @return Authorize Api
-     */
-    public function authorize()
+    public function authorize(): Authorize
     {
         $headers = [
             'headers' =>
-            ['Authorization' => base64_encode($this->apiKey . ':' . $this->secret)]
+                [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Authorization' => 'Basic ' . base64_encode($this->apiKey . ':' . $this->secret)
+                ]
         ];
         $this->setAdapter($this->adapter, $headers);
         return new Authorize($this);
     }
 
-    /**
-     * @return Business Unit
-     */
-    public function businessUnit()
+    public function businessUnit(): BusinessUnit
     {
         $this->setAdapterWithApikey();
         return new BusinessUnit($this);
     }
 
-    /**
-     * @return Categories API
-     */
-    public function categories()
+    public function categories(): Categories
     {
         $this->setAdapterWithApikey();
         return new Categories($this);
     }
 
-    /**
-     * @return Consumer API
-     */
-    public function consumer()
+    public function consumer(): Consumer
     {
         $this->setAdapterWithApikey();
         return new Consumer($this);
     }
 
-    /**
-     * @return Resources API
-     */
-    public function resources()
+    public function resources(): Resources
     {
         $this->setAdapterWithApikey();
-        return new Consumer($this);
+        return new Resources($this);
     }
 
-    /**
-     * @return Invitation API
-     */
-    public function invitation()
+    public function invitation(): Invitation
     {
         $this->endpoint = 'https://invitations-api.trustpilot.com/v1/';
         $this->setAdapterWithToken();
         return new Invitation($this);
     }
 
-    /**
-     * @return Product Reviews API
-     */
-    public function productReviews()
+    public function productReviews(): ProductReviews
     {
         $this->setAdapterWithToken();
         return new ProductReviews($this);
     }
 
-    /**
-     * @return Service Reviews API
-     */
-    public function serviceReviews()
+    public function serviceReviews(): ServiceReviews
     {
         $this->setAdapterWithToken();
         return new ServiceReviews($this);
